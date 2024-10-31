@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page-title', 'Modifica Tipo')
+@section('page-title', 'Crea Tecnologia')
 
 @section('main-content')
     <div class="row mb-4">
@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center text-success">
-                        Modifica Tipo: {{ $type->name }}
+                        Crea Tecnologia
                     </h1>
                 </div>
             </div>
@@ -30,18 +30,17 @@
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.types.update', ['type' => $type->id]) }}" method="post">
+                    <form action="{{ route('admin.technologies.store') }}" method="post">
                         @csrf
-                        @method('PUT')
 
                         <div class="mb-3">
                             <label for="name" class="form-label">Nome <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="name" name="name" required minlength="3" maxlength="128" value="{{ old('name', $type->name) }}" placeholder="Inserisci il nome del tipo....">
+                            <input type="text" class="form-control" id="name" name="name" required minlength="3" maxlength="128" value="{{ old('name') }}" placeholder="Inserisci il nome della tecnologia....">
                         </div>
 
                         <div class="text-center">
-                            <button type="submit" class="btn btn-warning w-75 text-center">
-                                Aggiorna
+                            <button type="submit" class="btn btn-success w-75 text-center">
+                                Crea
                             </button>
                         </div>
                         
