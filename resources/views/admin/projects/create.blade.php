@@ -70,6 +70,35 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">Tecnologia</label>
+                            </div>
+                            @foreach ($technologies as $technology)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="technology-{{ $technology->id }}" name="technologies[]" value="{{ $technology->id }}">
+                                    <label class="form-check-label" for="technology-{{ $technology->id }}">
+                                        {{ $technology->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                            {{-- <select id="technology_id" name="technology_id" class="form-select">
+                                <option
+                                    @if (old('technology_id') == null)
+                                        selected
+                                    @endif 
+                                    value="">Seleziona la Tecnologia</option>
+                                @foreach ($technologies as $technology)
+                                    <option 
+                                    @if (old('technology_id') == $technology->id)
+                                        selected
+                                    @endif 
+                                    value="{{ $technology->id }}"
+                                    name="technologies[]">{{ $technology->name }}</option>
+                                @endforeach
+                            </select> --}}
+                        </div>
                         
 
                         <div class="form-check mb-3">

@@ -8,7 +8,8 @@ use App\Http\Controllers\Controller;
 // Models
 use App\Models\{
     Project,
-    Type
+    Type,
+    Technology
 };
 
 class ProjectController extends Controller
@@ -29,7 +30,10 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::get();
-        return view('admin.projects.create', compact('types'));
+
+        $technologies = Technology::get();
+
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -44,12 +48,15 @@ class ProjectController extends Controller
             'price' => 'nullable|decimal:2|min:0|max:99999',
             'complete' => 'nullable|in:1,0,true,false',
             'type_id' => 'nullable|exists:types,id',
+            'technologies' => 'nullable|array|exists:technologies,id',
         ]);
 
         $data['slug'] = str()->slug($data['name']);
         $data['complete'] = isset($data['complete']);
 
         $project = Project::create($data);
+
+        $project->technologies()->sync($data['technologies']);
 
         return redirect()->route('admin.projects.show', ['project' => $project->id]);
     }
@@ -69,7 +76,10 @@ class ProjectController extends Controller
     {
         $types = Type::get();
 
-        return view('admin.projects.edit',  compact('project', 'types'));
+        $technologies = Technology::get();
+
+
+        return view('admin.projects.edit',  compact('project', 'types', 'technologies'));
 
     }
 
@@ -85,6 +95,8 @@ class ProjectController extends Controller
             'price' => 'nullable|decimal:2|min:0|max:99999',
             'complete' => 'nullable|in:1,0,true,false',
             'type_id' => 'nullable|exists:types,id',
+            'technologies' => 'nullable|array|exists:technologies,id',
+
 
         ]);
 
@@ -92,6 +104,8 @@ class ProjectController extends Controller
         $data['complete'] = isset($data['complete']);
 
         $project->update($data);
+
+        $project->technologies()->sync($data['technologies'] ?? []);
 
         return redirect()->route('admin.projects.show', ['project' => $project->id]);
 

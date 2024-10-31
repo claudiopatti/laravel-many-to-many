@@ -13,4 +13,12 @@ class Technology extends Model
         'name',
         'slug',
     ];
+
+    // Relationships
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)
+                    ->withTimestamps();
+    }
 }

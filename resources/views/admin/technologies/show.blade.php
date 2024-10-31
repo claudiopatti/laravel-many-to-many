@@ -37,7 +37,7 @@
                         </li>
                         <li>
                             Tipi collegati:
-{{-- 
+
                             @if ($technology->projects()->count() > 0)
                                 <ul>
                                     @foreach ($technology->projects as $project)
@@ -50,7 +50,7 @@
                                 </ul>                                
                             @else
                                 -
-                            @endif --}}
+                            @endif
 
                         </li>
                     </ul>

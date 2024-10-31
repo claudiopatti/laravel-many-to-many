@@ -5,9 +5,15 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+//Helpers
+use Illuminate\Support\Facades\Schema;
+
 // Models 
-use App\Models\Project;
-use App\Models\Type;
+use App\Models\{
+    Project,
+    Type,
+    Technology
+};
 
 class ProjectSeeder extends Seeder
 {
@@ -16,7 +22,9 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        Project::truncate();
+        Schema::withoutForeignKeyConstraints(function () {
+            Project::truncate();
+        });
 
         for ($i=0; $i < 15; $i++) { 
             $name = fake()->words(3, true);
@@ -28,7 +36,7 @@ class ProjectSeeder extends Seeder
                 $randomTypeId = $randomType->id;
             }
 
-            Project::create([
+            $project = Project::create([
                 'name' => $name,
                 'slug' => $slug,
                 'description' => fake()->text(),
@@ -37,6 +45,17 @@ class ProjectSeeder extends Seeder
                 'complete' => fake()->boolean(80),
                 'type_id' => $randomTypeId
             ]);
+
+            $technologyIds =[];
+            for ($j = 0; $j < rand(0, Technology::count()) ; $j++) { 
+                $randomTechnology = Technology::inRandomOrder()->first();
+
+                if (!in_array($randomTechnology->id, $technologyIds)) {
+                    $technologyIds[] = $randomTechnology->id;
+                }
+            }
+
+            $project->technologies()->sync($technologyIds);
         }
     }
 }

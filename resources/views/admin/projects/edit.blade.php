@@ -72,6 +72,28 @@
                             </select>
                         </div>
 
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">Tecnologia</label>
+                            </div>
+                            @foreach ($technologies as $technology)
+                                <div class="form-check form-check-inline">
+                                    <input 
+                                        @if ($project->technologies->contains($technology->id))
+                                            checked
+                                        @endif
+                                        class="form-check-input" 
+                                        type="checkbox" 
+                                        id="technology-{{ $technology->id }}" 
+                                        name="technologies[]" 
+                                        value="{{ $technology->id }}">
+                                    <label class="form-check-label" for="technology-{{ $technology->id }}">
+                                        {{ $technology->name }}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+
                         <div class="form-check mb-3">
                             <input class="form-check-input" type="checkbox" value="1" id="complete" name="complete"
                                 @if (old('complete', $project->complete) != null)

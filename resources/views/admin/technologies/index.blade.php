@@ -39,8 +39,7 @@
                                 <tr>
                                     <th scope="row">{{ $technology->id }}</th>
                                     <td>{{ $technology->name }}</td>
-                                    <td></td>
-                                    {{-- <td class="text-center ">{{ count($technology->projects) }}</td> --}}
+                                    <td class="text-center ">{{ count($technology->projects) }}</td>
                                     <td class="d-flex justify-content-center ">
                                         <a href="{{ route('admin.technologies.show',[ 'technology' => $technology->id]) }}" class="btn btn-primary mx-2">
                                             Guarda

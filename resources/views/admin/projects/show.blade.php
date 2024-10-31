@@ -55,6 +55,27 @@
                                 -
                             @endif
                         </li>
+                        <li>
+                            Tecnologia collegata:
+
+                            <ul>
+                                @if (isset($project->technologies))
+                                    @foreach ($project->technologies as $technology)
+                                        <li>
+                                            <a href="{{ route('admin.technologies.show',[ 'technology' => $technology->id]) }}" class="badge rounded-pill text-bg-primary">
+                                                {{ $technology->name }} <br> 
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <li>
+                                         -   
+                                    </li>
+                                @endif
+                                
+                            </ul>
+
+                        </li>
                     </ul>
 
 

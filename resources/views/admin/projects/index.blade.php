@@ -31,6 +31,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Tipo</th>
+                                <th scope="col">Tecnologie</th>
                                 <th scope="col">Descrizione</th>
                                 <th scope="col">Completato</th>
                                 <th scope="col">Gestione</th>
@@ -44,29 +45,42 @@
                                     <td>
                                         @if (isset($project->type))
                                             <a href="{{ route('admin.types.show', ['type' => $project->type_id]) }}">
-                                                {{ $project->type->name }}
+                                                {{ $project->type->name }} 
                                             </a>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (isset($project->technologies))
+                                            @foreach ($project->technologies as $technology)
+                                                <a href="{{ route('admin.technologies.show',[ 'technology' => $technology->id]) }}" class="badge rounded-pill text-bg-primary">
+                                                    {{ $technology->name }} <br> 
+                                                </a>
+                                            @endforeach
                                         @else
                                             -
                                         @endif
                                     </td>
                                     <td>{{ $project->description }}</td>
                                     <td>{{ $project->complete ? 'Si' : 'No' }}</td>
-                                    <td class="text-center d-flex ">
-                                        <a href="{{ route('admin.projects.show',[ 'project' => $project->id]) }}" class="btn btn-primary mx-2">
-                                            Guarda
-                                        </a><a href="{{ route('admin.projects.edit',[ 'project' => $project->id]) }}" class="btn btn-warning mx-2">
-                                            Modifica
-                                        </a>
-                                        <form action="{{ route('admin.projects.destroy', ['project'=> $project->id]) }}" method="POST"
-                                            onsubmit="return confirm('Sei sicuro sicuro di voler eliminare il progetto: {{ $project->name }} ?')">
-
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">
-                                                Elimina
-                                            </button>
-                                        </form>
+                                    <td class="text-center ">
+                                        <div class="d-flex">
+                                            <a href="{{ route('admin.projects.show',[ 'project' => $project->id]) }}" class="btn btn-primary mx-2">
+                                                Guarda
+                                            </a><a href="{{ route('admin.projects.edit',[ 'project' => $project->id]) }}" class="btn btn-warning mx-2">
+                                                Modifica
+                                            </a>
+                                            <form action="{{ route('admin.projects.destroy', ['project'=> $project->id]) }}" method="POST"
+                                                onsubmit="return confirm('Sei sicuro sicuro di voler eliminare il progetto: {{ $project->name }} ?')">
+    
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">
+                                                    Elimina
+                                                </button>
+                                            </form>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
